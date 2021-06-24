@@ -1,0 +1,12 @@
+{
+  "name": "acpa-cms-mobile",
+  "displayName": "acpa-cms-mobile",
+  "expo": {
+    "name": "acpa-cms-mobile",
+    "slug": "acpa-cms-mobile",
+    "version": "1.0.0",
+    "assetBundlePatterns": [
+      "**/*"
+    ]
+  }
+}
