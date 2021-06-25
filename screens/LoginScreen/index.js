@@ -20,30 +20,28 @@ export default function LoginScreen({ navigation }) {
 
     return (
         <View style={styles.container}>
-            <SafeAreaView style={{ flex: 1 }}>
-                <Text>Login Screen123s</Text>
-                <TextInput
-                    onChangeText={(email) => setEmail(email)}
-                    editable
-                    placeholder={'請輸入用戶電郵'}
-                    maxLength={40}
-                    style={styles.input}
-                    value={email}
-                />
-                <TextInput
-                    onChangeText={(password) => setPassword(password)}
-                    editable
-                    secureTextEntry={true}
-                    placeholder={'請輸入密碼'}
-                    maxLength={20}
-                    style={styles.input}
-                    value={password}
-                />
-                <Button
-                    title="Login"
-                    onPress={() => handleLogin(email, password)}
-                />
-            </SafeAreaView>
+            <Text>Login Screen123s</Text>
+            <TextInput
+                onChangeText={(email) => setEmail(email)}
+                editable
+                placeholder={'請輸入用戶電郵'}
+                maxLength={40}
+                style={styles.input}
+                value={email}
+            />
+            <TextInput
+                onChangeText={(password) => setPassword(password)}
+                editable
+                secureTextEntry={true}
+                placeholder={'請輸入密碼'}
+                maxLength={20}
+                style={styles.input}
+                value={password}
+            />
+            <Button
+                title="Login"
+                onPress={() => handleLogin(email, password)}
+            />
         </View>
     )
 }
