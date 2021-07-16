@@ -2,7 +2,7 @@ import React, { useContext, useMemo, useReducer, useEffect } from 'react';
 import { View, Text, Button, Image } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
-import { useBetween } from 'use-between';
+
 // screens
 import LoginScreen from './screens/LoginScreen';
 import ReferreeScreen from './screens/ReferreeScreen';

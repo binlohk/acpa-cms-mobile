@@ -4,15 +4,12 @@ import { AuthContext } from '../../contexts/authContext';
 import axios from 'axios';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import * as SecureStore from 'expo-secure-store';
-import { useBetween } from 'use-between';
-import shareMem from '../../shareState/shareState';
 import { ShareContext } from '../../contexts/shareContext';
 
 export default function ProfileScreen({ navigation }) {
     const [api, ApiReply] = React.useState("");
     const [isLoading, setLoading] = useState(true);
     const { courseShare: [courseList, CourseReply], referreeShare: [referreeList, ReferreeReply] } = React.useContext(ShareContext);
-    // const { courseList, CourseReply, referreeList, ReferreeReply } = useBetween(shareMem);
     const onShare = async () => {
         try {
             const copyLink = api ? `http://localhost:3000/signup/${api.referralToken}` : '';

@@ -1,7 +1,6 @@
 import React, { useContext, useEffect, useState, useCallback } from 'react';
 import { StatusBar, ScrollView, StyleSheet, Text, View, Button, FlatList } from 'react-native';
 import { AuthContext } from '../../contexts/authContext';
-import { useBetween } from 'use-between';
 import { ShareContext } from '../../contexts/shareContext';
 
 export default function ReferreeScreen({ navigation }) {
