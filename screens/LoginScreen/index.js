@@ -22,7 +22,7 @@ export default function LoginScreen({ navigation }) {
     return (
         <View style={styles.container}>
             <StatusBar barStyle="dark-content" hidden={false} backgroundColor="#807038" translucent={true} />
-            <Image style={{ top: -20, width: "80%", height: "10%" }} source={require('../../assets/icons/logo-strapi.png')} />
+            <Image style={{ top: -20, minWidth: "80%", minHeight: "10%" }} source={require('../../assets/icons/logo-strapi.png')} />
             <TextInput
                 onChangeText={(email) => setEmail(email)}
                 editable

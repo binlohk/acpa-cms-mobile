@@ -84,7 +84,6 @@ function App() {
         await SecureStore.setItemAsync('name', response.data.user.username);
         await SecureStore.setItemAsync('email', response.data.user.email);
         await SecureStore.setItemAsync('token', response.data.jwt);
-        await SecureStore.setItemAsync('id', response.data.user.id.toString())
         // new storage
         dispatch({ type: 'LOGIN', name: response.data.user.username, email: response.data.user.email, token: response.data.jwt });
       } catch (e) {
@@ -97,7 +96,6 @@ function App() {
         await SecureStore.deleteItemAsync('name');
         await SecureStore.deleteItemAsync('email');
         await SecureStore.deleteItemAsync('token');
-        await SecureStore.deleteItemAsync('id')
         dispatch({ type: 'LOGOUT' });
         // console.log('logged out')
         // console.log('after logout user token: ', loginState.token);
@@ -137,11 +135,11 @@ function App() {
               ) : (
                 <>
                   <Stack.Screen options={{ headerTitle: () => (<Image style={{ width: 120, height: 25 }} source={require('./assets/icons/logo-strapi.png')} />), }} name="Home" component={Tabs} />
-                  <Stack.Screen name="Test" component={ReferreeScreen} options={{
+                  <Stack.Screen name="Referree" component={ReferreeScreen} options={{
                     headerTitle: () => (<Image style={{ width: 120, height: 25 }} source={require('./assets/icons/logo-strapi.png')} />),
                     headerBackTitle: () => { }
                   }} />
-                  <Stack.Screen name="Test2" component={CourseInfoScreen} options={{
+                  <Stack.Screen name="Courses" component={CourseInfoScreen} options={{
                     headerTitle: () => (<Image style={{ width: 120, height: 25 }} source={require('./assets/icons/logo-strapi.png')} />),
                     headerBackTitle: () => { }
                   }} />

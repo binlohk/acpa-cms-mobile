@@ -4,6 +4,7 @@ import { AuthContext } from '../../contexts/authContext';
 import { ShareContext } from '../../contexts/shareContext';
 
 export default function ReferreeScreen({ navigation }) {
+
     const [isLoading, setLoading] = useState(true);
     const [DATA, getList] = useState([])
     const { referreeShare: [referreeList, ReferreeReply] } = React.useContext(ShareContext);

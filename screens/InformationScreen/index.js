@@ -245,13 +245,13 @@ export default function ProfileScreen({ navigation }) {
                         </View>
                         <View style={styles.buttonContainer}>
                             <View style={styles.redirectButtonContainer}>
-                                <TouchableOpacity onPress={() => navigation.navigate('Test')}>
+                                <TouchableOpacity onPress={() => navigation.navigate('Referree')}>
                                     <View style={styles.redirectButton}>
                                         <Text style={styles.upperText}>{referreeList.length}</Text>
                                         <Text style={styles.lowerText}><Icon name="user" color="#4F8EF7" size={15} solid /> 你推薦的會員</Text>
                                     </View>
                                 </TouchableOpacity>
-                                <TouchableOpacity onPress={() => navigation.navigate('Test2')} >
+                                <TouchableOpacity onPress={() => navigation.navigate('Courses')} >
                                     <View style={styles.redirectButton}>
                                         <Text style={styles.upperText}>{courseList.length}</Text>
                                         <Text style={styles.lowerText}><Icon name="book" color="#4F8EF7" size={15} /> 你擁有的課程</Text>
