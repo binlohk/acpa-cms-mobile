@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { StyleSheet, TextInput, Text, View, Button, SafeAreaView } from 'react-native';
+import { StatusBar, TouchableHighlight, Image, StyleSheet, TextInput, Text, View, Button, SafeAreaView } from 'react-native';
+import { color } from 'react-native-reanimated';
 import { AuthContext } from '../../contexts/authContext';
 
 /** 
@@ -12,15 +13,16 @@ export default function LoginScreen({ navigation }) {
     /**text states */
     const [email, setEmail] = useState('wongw859@gmail.com');
     const [password, setPassword] = useState('strapiPassword');
-
+    // const [email, setEmail] = useState('binlo@test.com');
+    // const [password, setPassword] = useState('binlo123');
     const handleLogin = (email, password) => {
         logIn(email, password)
-        // console.log(email, password, 'email, password')
     }
 
     return (
         <View style={styles.container}>
-            <Text>Login Screen123s</Text>
+            <StatusBar barStyle="dark-content" hidden={false} backgroundColor="#807038" translucent={true} />
+            <Image style={{ top: -20, width: "80%", height: "10%" }} source={require('../../assets/icons/logo-strapi.png')} />
             <TextInput
                 onChangeText={(email) => setEmail(email)}
                 editable
@@ -38,10 +40,9 @@ export default function LoginScreen({ navigation }) {
                 style={styles.input}
                 value={password}
             />
-            <Button
-                title="Login"
-                onPress={() => handleLogin(email, password)}
-            />
+            <TouchableHighlight underlayColor="#807038" style={[styles.buttonContainer, styles.loginButton]} onPress={() => handleLogin(email, password)}>
+                <Text style={{ color: "white", fontSize: 18, fontWeight: 'bold' }}>登入</Text>
+            </TouchableHighlight>
         </View>
     )
 }
@@ -51,7 +52,8 @@ const styles = StyleSheet.create({
         flex: 1,
         alignItems: 'center',
         marginTop: 20,
-        backgroundColor: '#ffffff',
+        backgroundColor: 'rgba(81,54,84,1)',
+        justifyContent: 'center',
     },
     input: {
         width: 250,
@@ -59,6 +61,20 @@ const styles = StyleSheet.create({
         padding: 10,
         marginTop: 20,
         marginBottom: 10,
-        backgroundColor: '#e8e8e8'
+        backgroundColor: '#e8e8e8',
+        borderRadius: 30
     },
+    buttonContainer: {
+        marginTop: 20,
+        height: 45,
+        flexDirection: 'row',
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginBottom: 20,
+        width: 250,
+        borderRadius: 30,
+    },
+    loginButton: {
+        backgroundColor: '#A5924B',
+    }
 });

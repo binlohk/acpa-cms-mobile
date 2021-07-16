@@ -1,11 +1,16 @@
 import React, { useContext, useMemo, useReducer, useEffect } from 'react';
-import { View, Text, Button } from 'react-native';
+import { View, Text, Button, Image } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
-
+import { useBetween } from 'use-between';
 // screens
 import LoginScreen from './screens/LoginScreen';
-import UserScreen from './screens/UserScreen';
+import ReferreeScreen from './screens/ReferreeScreen';
+import ProfileScreen from './screens/InformationScreen';
+import CourseInfoScreen from './screens/CourseInfoScreen';
+
+/**navigation tab */
+import Tabs from './navigation/tabs';
 
 /**navigation */
 const Stack = createStackNavigator();
@@ -15,6 +20,7 @@ import * as SecureStore from 'expo-secure-store';
 
 /**context */
 import { AuthContext } from './contexts/authContext';
+import ShareProvider from './contexts/shareContext'
 
 /**API */
 import axios from 'axios';
@@ -22,6 +28,7 @@ import axios from 'axios';
 /**if loading add spinner */
 
 function App() {
+
   /**reducers */
   const initialLoginState = {
     isLoading: true,
@@ -77,7 +84,8 @@ function App() {
         await SecureStore.setItemAsync('name', response.data.user.username);
         await SecureStore.setItemAsync('email', response.data.user.email);
         await SecureStore.setItemAsync('token', response.data.jwt);
-
+        await SecureStore.setItemAsync('id', response.data.user.id.toString())
+        // new storage
         dispatch({ type: 'LOGIN', name: response.data.user.username, email: response.data.user.email, token: response.data.jwt });
       } catch (e) {
         console.log(e);
@@ -89,6 +97,7 @@ function App() {
         await SecureStore.deleteItemAsync('name');
         await SecureStore.deleteItemAsync('email');
         await SecureStore.deleteItemAsync('token');
+        await SecureStore.deleteItemAsync('id')
         dispatch({ type: 'LOGOUT' });
         // console.log('logged out')
         // console.log('after logout user token: ', loginState.token);
@@ -117,17 +126,31 @@ function App() {
 
   return (
     <AuthContext.Provider value={authContext}>
-      <NavigationContainer>
-        <Stack.Navigator>
-          {
-            loginState.token === null ? (
-              <Stack.Screen name="Login" component={LoginScreen} options={{ title: 'Login' }} />
-            ) : (
-              <Stack.Screen name="User" component={UserScreen} options={{ title: 'User profile' }} />
-            )
-          }
-        </Stack.Navigator>
-      </NavigationContainer>
+      <ShareProvider>
+        <NavigationContainer>
+          <Stack.Navigator>
+            {
+              loginState.token === null ? (
+                <>
+                  <Stack.Screen name="Login" component={LoginScreen} options={{ headerShown: false }} />
+                </>
+              ) : (
+                <>
+                  <Stack.Screen options={{ headerTitle: () => (<Image style={{ width: 120, height: 25 }} source={require('./assets/icons/logo-strapi.png')} />), }} name="Home" component={Tabs} />
+                  <Stack.Screen name="Test" component={ReferreeScreen} options={{
+                    headerTitle: () => (<Image style={{ width: 120, height: 25 }} source={require('./assets/icons/logo-strapi.png')} />),
+                    headerBackTitle: () => { }
+                  }} />
+                  <Stack.Screen name="Test2" component={CourseInfoScreen} options={{
+                    headerTitle: () => (<Image style={{ width: 120, height: 25 }} source={require('./assets/icons/logo-strapi.png')} />),
+                    headerBackTitle: () => { }
+                  }} />
+                </>
+              )
+            }
+          </Stack.Navigator>
+        </NavigationContainer>
+      </ShareProvider>
     </AuthContext.Provider >
   );
 }
