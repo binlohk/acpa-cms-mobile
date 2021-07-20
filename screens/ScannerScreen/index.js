@@ -4,6 +4,7 @@ import Constants from 'expo-constants';
 import * as Permissions from 'expo-permissions';
 
 import { BarCodeScanner } from 'expo-barcode-scanner';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 
 export default class BarcodeScannerExample extends React.Component {
     state = {
@@ -40,10 +41,15 @@ export default class BarcodeScannerExample extends React.Component {
         }
 
         return (
-            <View style={{ flex: 1, flexDirection: 'column', justifyContent: 'flex-end', }}>
+            <View style={{ flex: 1, flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
                 <BarCodeScanner onBarCodeScanned={scanned ? undefined : this.handleBarCodeScanned} style={StyleSheet.absoluteFillObject} />
                 {
-                    scanned && (<Button title={'Tap to Scan Again'} onPress={() => this.setState({ scanned: false })} />)
+                    // scanned && (<Button titleStyle={{ fontSize: 25, fontWeight: '800' }} title={'Tap to Scan Again'} onPress={() => this.setState({ scanned: false })} />)
+                    scanned && (<TouchableOpacity style={{ width: '80%', borderWidth: 4, borderColor: 'black', justifyContent: 'center', alignItems: 'center' }} onPress={() => this.setState({ scanned: false })}>
+                        <Text style={{ fontSize: 30, fontWeight: '600' }}>
+                            Tap to Scan Again
+                        </Text>
+                    </TouchableOpacity>)
                 }
             </View>
         );

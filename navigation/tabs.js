@@ -47,7 +47,8 @@ const Tabs = () => {
                     tabBarIcon: ({ color }) => (
                         <MaterialCommunityIcons name="account" color={color} size={35} />
                     ),
-                }} />
+                }}
+            />
             <Tab.Screen name="Scanner"
                 component={ScannerScreen}
                 options={{

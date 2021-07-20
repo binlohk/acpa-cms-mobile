@@ -8,6 +8,7 @@ import LoginScreen from './screens/LoginScreen';
 import ReferreeScreen from './screens/ReferreeScreen';
 import ProfileScreen from './screens/InformationScreen';
 import CourseInfoScreen from './screens/CourseInfoScreen';
+import ScannerScreen from './screens/ScannerScreen';
 
 /**navigation tab */
 import Tabs from './navigation/tabs';
@@ -135,6 +136,10 @@ function App() {
               ) : (
                 <>
                   <Stack.Screen options={{ headerTitle: () => { (<Image style={{ width: 120, height: 25 }} source={require('./assets/icons/logo-strapi.png')} />) }, }} name="Home" component={Tabs} />
+                  {/* <Stack.Screen name="Scanner" component={ScannerScreen} options={{
+                    headerTitle: () => (<Image style={{ width: 120, height: 25 }} source={require('./assets/icons/logo-strapi.png')} />),
+                    headerBackTitle: () => { }
+                  }} /> */}
                   <Stack.Screen name="Referree" component={ReferreeScreen} options={{
                     headerTitle: () => (<Image style={{ width: 120, height: 25 }} source={require('./assets/icons/logo-strapi.png')} />),
                     headerBackTitle: () => { }
