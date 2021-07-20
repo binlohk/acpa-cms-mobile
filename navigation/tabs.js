@@ -6,7 +6,9 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 import { AuthContext } from '../contexts/authContext';
 // screens
 import ReferreeScreen from '../screens/ReferreeScreen';
+import ScannerScreen from '../screens/ScannerScreen';
 import InformationScreen from '../screens/InformationScreen';
+
 
 const Tab = createBottomTabNavigator();
 
@@ -44,6 +46,14 @@ const Tabs = () => {
                     tabBarLabel: 'Information',
                     tabBarIcon: ({ color }) => (
                         <MaterialCommunityIcons name="account" color={color} size={35} />
+                    ),
+                }} />
+            <Tab.Screen name="Scanner"
+                component={ScannerScreen}
+                options={{
+                    tabBarLabel: 'QR CODE',
+                    tabBarIcon: ({ color }) => (
+                        <MaterialCommunityIcons name="qrcode-scan" color={color} size={35} />
                     ),
                 }} />
             <Tab.Screen name="Exit"

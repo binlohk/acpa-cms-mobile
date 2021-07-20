@@ -134,7 +134,7 @@ function App() {
                 </>
               ) : (
                 <>
-                  <Stack.Screen options={{ headerTitle: () => (<Image style={{ width: 120, height: 25 }} source={require('./assets/icons/logo-strapi.png')} />), }} name="Home" component={Tabs} />
+                  <Stack.Screen options={{ headerTitle: () => { (<Image style={{ width: 120, height: 25 }} source={require('./assets/icons/logo-strapi.png')} />) }, }} name="Home" component={Tabs} />
                   <Stack.Screen name="Referree" component={ReferreeScreen} options={{
                     headerTitle: () => (<Image style={{ width: 120, height: 25 }} source={require('./assets/icons/logo-strapi.png')} />),
                     headerBackTitle: () => { }
