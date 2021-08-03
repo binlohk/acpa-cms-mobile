@@ -129,36 +129,39 @@ export default function ProfileScreen({ navigation }) {
             fontWeight: '300'
         },
         staticContainerData: {
+            marginTop: -5,
             height: 95,
             width: '90%',
             flexDirection: 'row',
             justifyContent: 'center',
             alignItems: 'center',
-            backgroundColor: 'white',
-            borderRadius: 45
         },
         dataBox: {
-            paddingTop: 10,
+            paddingTop: 5,
+            paddingRight: 30,
             width: '33%',
             height: '60%',
             alignItems: 'center',
             borderRightWidth: 3,
-            borderRightColor: 'black'
+            borderRightColor: 'white',
         },
         specialDataBox: {
-            paddingTop: 10,
+            paddingTop: 5,
+            paddingLeft: 30,
             width: '30%',
             height: '60%',
             alignItems: 'center',
         },
         upperData: {
-            fontSize: 20,
-            fontWeight: '600'
+            fontSize: 25,
+            fontWeight: '600',
+            color: "white"
         },
         lowerData: {
             marginTop: 8,
-            fontSize: 13,
-            fontWeight: '300'
+            fontSize: 16,
+            fontWeight: '300',
+            color: "white"
         },
         upperText: {
             fontSize: 25,
@@ -170,6 +173,7 @@ export default function ProfileScreen({ navigation }) {
             fontWeight: '300'
         },
         buttonContainer: {
+            marginTop: -30,
             width: '100%',
             height: 350,
             alignItems: 'center'
@@ -229,10 +233,6 @@ export default function ProfileScreen({ navigation }) {
                                 </View>
                             </View>
                             <View style={styles.staticContainerData}>
-                                <View style={styles.dataBox}>
-                                    <Text style={styles.upperData}>{api.created_at.substring(0, 10).replaceAll("-", "/")}</Text>
-                                    <Text style={styles.lowerData}>註冊日期</Text>
-                                </View>
                                 <View style={styles.dataBox}>
                                     <Text style={styles.upperData}>{api.point || 0}</Text>
                                     <Text style={styles.lowerData}>獎賞分數</Text>
