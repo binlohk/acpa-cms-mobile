@@ -11,8 +11,8 @@ export default function LoginScreen({ navigation }) {
     /**grab signin fn */
     const { logIn } = React.useContext(AuthContext);
     /**text states */
-    const [email, setEmail] = useState('wongw859@gmail.com');
-    const [password, setPassword] = useState('strapiPassword');
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
     // const [email, setEmail] = useState('binlo@test.com');
     // const [password, setPassword] = useState('binlo123');
     const handleLogin = (email, password) => {

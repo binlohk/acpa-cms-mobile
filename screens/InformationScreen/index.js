@@ -12,7 +12,7 @@ export default function ProfileScreen({ navigation }) {
     const { courseShare: [courseList, CourseReply], referreeShare: [referreeList, ReferreeReply] } = React.useContext(ShareContext);
     const onShare = async () => {
         try {
-            const copyLink = api ? `http://localhost:3000/signup/${api.referralToken}` : '';
+            const copyLink = api ? `http://app.acpa.training/signup/${api.referralToken}` : '';
             const result = await Share.share({
                 message:
                     copyLink,
@@ -45,7 +45,7 @@ export default function ProfileScreen({ navigation }) {
                 method: "GET",
                 headers: myHeaders,
             };
-            await fetch("http://192.168.0.204:1337/courses", requestOptions)
+            await fetch("http://app.acpa.training/api/courses", requestOptions)
                 .then((response) => response.text())
                 .then((result) => JSON.parse(result))
                 .then((parseResult) => parseResult.filter(item => item.purchased == true))
@@ -53,12 +53,12 @@ export default function ProfileScreen({ navigation }) {
                 .catch((d) => {
                     alert("500");
                 });
-            const apiResponse = await fetch("http://192.168.0.204:1337/users/me", requestOptions)
+            const apiResponse = await fetch("http://app.acpa.training/api/users/me", requestOptions)
             const parserAPI = await (apiResponse.text())
             const jsonAPI = await (JSON.parse(parserAPI))
             await ApiReply(jsonAPI)
 
-            const referralResponse = await fetch("http://192.168.0.204:1337/user-referrals", requestOptions)
+            const referralResponse = await fetch("http://app.acpa.training/api/user-referrals", requestOptions)
             const parserReferral = await (referralResponse.text())
             const jsonReferral = await (JSON.parse(parserReferral))
             const filterResult = await (jsonReferral.filter(item => item.referral_referrer.id == jsonAPI.id))
@@ -91,7 +91,7 @@ export default function ProfileScreen({ navigation }) {
         },
         body: {
             width: '100%',
-            backgroundColor: 'linear-gradient(0deg, rgba(81,54,84,1) 0%, rgba(2,0,36,1) 43%, rgba(81,54,84,1) 100%)'
+            backgroundColor: '#513654'
         },
         staticContainer: {
             height: 400,
