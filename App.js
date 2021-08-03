@@ -2,6 +2,7 @@ import React, { useContext, useMemo, useReducer, useEffect } from 'react';
 import { View, Text, Button, Image } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
 
 // screens
 import LoginScreen from './screens/LoginScreen';
@@ -75,7 +76,7 @@ function App() {
     logIn: async (email, password) => {
       /**make axios call */
       try {
-        const response = await axios.post(`http://192.168.0.204:1337/auth/local`, {
+        const response = await axios.post(`http://app.acpa.training/api/auth/local`, {
           identifier: email,
           password: password
         })
@@ -124,37 +125,35 @@ function App() {
   }, [loginState.token]);
 
   return (
-    <AuthContext.Provider value={authContext}>
-      <ShareProvider>
-        <NavigationContainer>
-          <Stack.Navigator>
-            {
-              loginState.token === null ? (
-                <>
-                  <Stack.Screen name="Login" component={LoginScreen} options={{ headerShown: false }} />
-                </>
-              ) : (
-                <>
-                  <Stack.Screen options={{ headerTitle: () => { (<Image style={{ width: 120, height: 25 }} source={require('./assets/icons/logo-strapi.png')} />) }, }} name="Home" component={Tabs} />
-                  {/* <Stack.Screen name="Scanner" component={ScannerScreen} options={{
-                    headerTitle: () => (<Image style={{ width: 120, height: 25 }} source={require('./assets/icons/logo-strapi.png')} />),
-                    headerBackTitle: () => { }
-                  }} /> */}
-                  <Stack.Screen name="Referree" component={ReferreeScreen} options={{
-                    headerTitle: () => (<Image style={{ width: 120, height: 25 }} source={require('./assets/icons/logo-strapi.png')} />),
-                    headerBackTitle: () => { }
-                  }} />
-                  <Stack.Screen name="Courses" component={CourseInfoScreen} options={{
-                    headerTitle: () => (<Image style={{ width: 120, height: 25 }} source={require('./assets/icons/logo-strapi.png')} />),
-                    headerBackTitle: () => { }
-                  }} />
-                </>
-              )
-            }
-          </Stack.Navigator>
-        </NavigationContainer>
-      </ShareProvider>
-    </AuthContext.Provider >
+    <SafeAreaProvider>
+      <AuthContext.Provider value={authContext}>
+        <ShareProvider>
+          <NavigationContainer>
+            <Stack.Navigator>
+              {
+                loginState.token === null ? (
+                  <>
+                    <Stack.Screen name="Login" component={LoginScreen} options={{ headerShown: false }} />
+                  </>
+                ) : (
+                  <>
+                    <Stack.Screen options={{ headerTitle: () => (<Image style={{ width: 120, height: 25 }} source={require('./assets/icons/logo-strapi.png')} />), }} name="Home" component={Tabs} />
+                    <Stack.Screen name="Referree" component={ReferreeScreen} options={{
+                      headerTitle: () => (<Image style={{ width: 120, height: 25 }} source={require('./assets/icons/logo-strapi.png')} />),
+                      headerBackTitle: () => { }
+                    }} />
+                    <Stack.Screen name="Courses" component={CourseInfoScreen} options={{
+                      headerTitle: () => (<Image style={{ width: 120, height: 25 }} source={require('./assets/icons/logo-strapi.png')} />),
+                      headerBackTitle: () => { }
+                    }} />
+                  </>
+                )
+              }
+            </Stack.Navigator>
+          </NavigationContainer>
+        </ShareProvider>
+      </AuthContext.Provider >
+    </SafeAreaProvider>
   );
 }
 
