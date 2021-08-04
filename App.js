@@ -75,7 +75,7 @@ function App() {
     logIn: async (email, password) => {
       /**make axios call */
       try {
-        const response = await axios.post(`http://app.acpa.training/api/auth/local`, {
+        const response = await axios.post(`https://app.acpa.training/api/auth/local`, {
           identifier: email,
           password: password
         })
