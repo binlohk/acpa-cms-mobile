@@ -9,10 +9,11 @@ import { ShareContext } from '../../contexts/shareContext';
 export default function ProfileScreen({ navigation }) {
     const [api, ApiReply] = React.useState("");
     const [isLoading, setLoading] = useState(true);
+    const [image, setImage] = useState(false);
     const { courseShare: [courseList, CourseReply], referreeShare: [referreeList, ReferreeReply] } = React.useContext(ShareContext);
     const onShare = async () => {
         try {
-            const copyLink = api ? `http://app.acpa.training/signup/${api.referralToken}` : '';
+            const copyLink = api ? `https://app.acpa.training/signup/${api.referralToken}` : '';
             const result = await Share.share({
                 message:
                     copyLink,
@@ -45,7 +46,7 @@ export default function ProfileScreen({ navigation }) {
                 method: "GET",
                 headers: myHeaders,
             };
-            await fetch("http://app.acpa.training/api/courses", requestOptions)
+            await fetch("https://app.acpa.training/api/courses", requestOptions)
                 .then((response) => response.text())
                 .then((result) => JSON.parse(result))
                 .then((parseResult) => parseResult.filter(item => item.purchased == true))
@@ -53,12 +54,12 @@ export default function ProfileScreen({ navigation }) {
                 .catch((d) => {
                     alert("500");
                 });
-            const apiResponse = await fetch("http://app.acpa.training/api/users/me", requestOptions)
+            const apiResponse = await fetch("https://app.acpa.training/api/users/me", requestOptions)
             const parserAPI = await (apiResponse.text())
             const jsonAPI = await (JSON.parse(parserAPI))
             await ApiReply(jsonAPI)
 
-            const referralResponse = await fetch("http://app.acpa.training/api/user-referrals", requestOptions)
+            const referralResponse = await fetch("https://app.acpa.training/api/user-referrals", requestOptions)
             const parserReferral = await (referralResponse.text())
             const jsonReferral = await (JSON.parse(parserReferral))
             const filterResult = await (jsonReferral.filter(item => item.referral_referrer.id == jsonAPI.id))
@@ -220,13 +221,26 @@ export default function ProfileScreen({ navigation }) {
             </View>) : (
                 <ScrollView style={styles.container}>
                     <StatusBar barStyle="dark-content" hidden={false} backgroundColor="#807038" translucent={true} />
-                    {/* <View style={styles.header}>
-                        <Image style={styles.companyLogo} source={require('../../assets/icons/logo-strapi.png')} />
-                    </View> */}
                     <View style={styles.body}>
                         <View style={styles.staticContainer}>
                             <View style={styles.staticContainerUser}>
-                                <Image style={styles.avatar} source={require('../../assets/icons/logo-strapi.png')} />
+                                {
+                                    api.profilePicture === null ? (
+                                        <Image
+                                            style={styles.avatar}
+                                            source={{
+                                                uri: 'https://icons.iconarchive.com/icons/paomedia/small-n-flat/72/profile-icon.png'
+                                            }}
+                                        />
+                                    ) : (
+                                        <Image
+                                            style={styles.avatar}
+                                            source={{
+                                                uri: `https://app.acpa.training/api/${api.profilePicture.url}`
+                                            }}
+                                        />
+                                    )
+                                }
                                 <View style={styles.nameBox}>
                                     <Text style={styles.nameUpperText}>{api.username}</Text>
                                     <Text style={styles.nameLowerText}>會員名稱</Text>
