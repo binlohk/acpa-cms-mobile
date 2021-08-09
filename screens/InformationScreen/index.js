@@ -114,7 +114,7 @@ export default function ProfileScreen({ navigation }) {
             marginTop: 20
         },
         nameBox: {
-            width: '30%',
+            width: '100%',
             height: 150,
             alignItems: 'center',
         },
