@@ -27,6 +27,7 @@ export default function LoginScreen({ navigation }) {
                 onChangeText={(email) => setEmail(email)}
                 editable
                 placeholder={'請輸入用戶電郵'}
+                placeholderTextColor="gray"
                 maxLength={40}
                 style={styles.input}
                 value={email}
@@ -36,6 +37,7 @@ export default function LoginScreen({ navigation }) {
                 editable
                 secureTextEntry={true}
                 placeholder={'請輸入密碼'}
+                placeholderTextColor="gray"
                 maxLength={20}
                 style={styles.input}
                 value={password}
