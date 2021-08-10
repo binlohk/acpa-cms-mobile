@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { StatusBar, TouchableHighlight, Image, StyleSheet, TextInput, Text, View, Button, SafeAreaView } from 'react-native';
 import { color } from 'react-native-reanimated';
 import { AuthContext } from '../../contexts/authContext';
+import * as Notifications from 'expo-notifications';
 
 /** 
  * {SafeAreaView} only available for ios devices

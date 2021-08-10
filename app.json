@@ -4,9 +4,12 @@
   "expo": {
     "name": "acpa-cms-mobile",
     "slug": "acpa-cms-mobile",
-    "version": "1.0.0",
+    "version": "1.4.1",
     "assetBundlePatterns": [
       "**/*"
-    ]
+    ],
+    "ios": {
+      "bundleIdentifier": "training.acpa.mobile"
+    }
   }
 }

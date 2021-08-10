@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState, useCallback } from 'react';
-import { ScrollView, StyleSheet, Text, View, Button, Image, TouchableOpacity, StatusBar } from 'react-native';
+import { ScrollView, StyleSheet, Text, View, Button, Image, TouchableOpacity, StatusBar, Alert } from 'react-native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
@@ -18,8 +18,17 @@ const Tabs = () => {
 
     const { logOut } = React.useContext(AuthContext);
     const handleLogout = () => {
-        // console.log('logout triggered')
-        logOut();
+        Alert.alert(
+            "你確定退出？",
+            "",
+            [
+                {
+                    text: "遲點",
+                    onPress: () => console.log("Ask me later pressed")
+                },
+                { text: "確定", onPress: () => logOut() }
+            ]
+        );
     }
     return (
         <Tab.Navigator
@@ -51,10 +60,16 @@ const Tabs = () => {
                 }} />
             <Tab.Screen name="Exit"
                 component={TabLogOutButton}
-                listeners={({ navigation, route }) => ({
-                    tabPress: handleLogout()
+                // listeners={({ navigation, route }) => ({
+                //     tabPress: handleLogout()
 
-                })}
+                // })}
+                listeners={{
+                    tabPress: (e) => {
+                        // Prevent default action
+                        handleLogout();
+                    },
+                }}
                 options={{
                     tabBarLabel: 'Logout',
                     // tabBarOptions: {

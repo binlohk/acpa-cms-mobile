@@ -1,10 +1,10 @@
 PODS:
   - boost-for-react-native (1.63.0)
   - DoubleConversion (1.1.6)
-  - EXApplication (3.1.2):
+  - EXApplication (3.2.0):
     - UMCore
-  - EXConstants (10.1.3):
-    - UMConstantsInterface
+  - EXConstants (11.0.1):
+    - ExpoModulesCore
     - UMCore
   - EXErrorRecovery (2.1.0):
     - UMCore
@@ -20,9 +20,21 @@ PODS:
     - UMImageLoaderInterface
   - EXKeepAwake (9.1.2):
     - UMCore
+  - EXNotifications (0.12.3):
+    - ExpoModulesCore
+    - UMCore
   - EXPermissions (12.0.1):
     - UMCore
     - UMPermissionsInterface
+  - ExpoModulesCore (0.2.0):
+    - ExpoModulesCore/Core (= 0.2.0)
+    - ExpoModulesCore/Interfaces (= 0.2.0)
+    - UMCore
+  - ExpoModulesCore/Core (0.2.0):
+    - UMCore
+  - ExpoModulesCore/Interfaces (0.2.0):
+    - ExpoModulesCore/Core
+    - UMCore
   - EXSecureStore (10.1.0):
     - UMCore
   - EXSplashScreen (0.10.2):
@@ -345,14 +357,16 @@ PODS:
 
 DEPENDENCIES:
   - DoubleConversion (from `../node_modules/react-native/third-party-podspecs/DoubleConversion.podspec`)
-  - EXApplication (from `../node_modules/expo-application/ios`)
-  - EXConstants (from `../node_modules/expo-constants/ios`)
+  - EXApplication (from `../node_modules/expo-notifications/node_modules/expo-application/ios`)
+  - EXConstants (from `../node_modules/expo-notifications/node_modules/expo-constants/ios`)
   - EXErrorRecovery (from `../node_modules/expo-error-recovery/ios`)
   - EXFileSystem (from `../node_modules/expo-file-system/ios`)
   - EXFont (from `../node_modules/expo-font/ios`)
   - EXImageLoader (from `../node_modules/expo-image-loader/ios`)
   - EXKeepAwake (from `../node_modules/expo-keep-awake/ios`)
+  - EXNotifications (from `../node_modules/expo-notifications/ios`)
   - EXPermissions (from `../node_modules/expo-permissions/ios`)
+  - ExpoModulesCore (from `../node_modules/expo-modules-core/ios`)
   - EXSecureStore (from `../node_modules/expo-secure-store/ios`)
   - EXSplashScreen (from `../node_modules/expo-splash-screen/ios`)
   - EXStructuredHeaders (from `../node_modules/expo-structured-headers/ios`)
@@ -413,9 +427,9 @@ EXTERNAL SOURCES:
   DoubleConversion:
     :podspec: "../node_modules/react-native/third-party-podspecs/DoubleConversion.podspec"
   EXApplication:
-    :path: "../node_modules/expo-application/ios"
+    :path: "../node_modules/expo-notifications/node_modules/expo-application/ios"
   EXConstants:
-    :path: "../node_modules/expo-constants/ios"
+    :path: "../node_modules/expo-notifications/node_modules/expo-constants/ios"
   EXErrorRecovery:
     :path: "../node_modules/expo-error-recovery/ios"
   EXFileSystem:
@@ -426,8 +440,12 @@ EXTERNAL SOURCES:
     :path: "../node_modules/expo-image-loader/ios"
   EXKeepAwake:
     :path: "../node_modules/expo-keep-awake/ios"
+  EXNotifications:
+    :path: "../node_modules/expo-notifications/ios"
   EXPermissions:
     :path: "../node_modules/expo-permissions/ios"
+  ExpoModulesCore:
+    :path: "../node_modules/expo-modules-core/ios"
   EXSecureStore:
     :path: "../node_modules/expo-secure-store/ios"
   EXSplashScreen:
@@ -530,14 +548,16 @@ EXTERNAL SOURCES:
 SPEC CHECKSUMS:
   boost-for-react-native: 39c7adb57c4e60d6c5479dd8623128eb5b3f0f2c
   DoubleConversion: cde416483dac037923206447da6e1454df403714
-  EXApplication: 47e6e78f70d07f538eeb544d5d0abe3287ac7043
-  EXConstants: c00cd53a17a65b2e53ddb3890e4e74d3418e406e
+  EXApplication: 9ff2a206009d6e55bca6c20b3f33d07986b51ef3
+  EXConstants: 3babb61f8f4bb7dffe85b8b7d6eaa31d903e4d7e
   EXErrorRecovery: 397b8830a66d45fc8018943475a2d530f91a65c4
   EXFileSystem: 35769beb727d5341d1276fd222710f9704f7164e
   EXFont: f9ec1eff7d8d7874cdc5d87ce532b2d61b62a451
   EXImageLoader: 1ad8b491fd0f3200b57b37ecb1801abeb6549926
   EXKeepAwake: da3b8472c2739a1edcd63b121ae4ab751aa325d4
-  EXPermissions: ea8d63dd052737765bd350b2ca7cee9bcfd5e18e
+  EXNotifications: 171ccaf17643811673c78f4c4830560d6e5a92aa
+  EXPermissions: 8f8c1c05580c4e02d4ee2c8dd74bfe173ff6a723
+  ExpoModulesCore: 2734852616127a6c1fc23012197890a6f3763dc7
   EXSecureStore: bc0d9a2796109886ba55e25e0e7db5587c584a61
   EXSplashScreen: b59a58feda693c17f1af73c715e4e058919fcb7c
   EXStructuredHeaders: 0c3b4c8030ec5ed2c3bc0b64f5af81005b9cb5c8
