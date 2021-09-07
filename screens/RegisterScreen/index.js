@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import { StatusBar, TouchableHighlight, Image, StyleSheet, TextInput, Text, View, Button, SafeAreaView } from 'react-native';
+import { StatusBar, TouchableHighlight, Image, StyleSheet, TextInput, Text, View, Button, SafeAreaView, Alert } from 'react-native';
 import { color } from 'react-native-reanimated';
 import { AuthContext } from '../../contexts/authContext';
 import * as Notifications from 'expo-notifications';
+import axios from 'axios';
 
 /** 
  * {SafeAreaView} only available for ios devices
@@ -13,11 +14,32 @@ export default function LoginScreen({ navigation }) {
     const { logIn } = React.useContext(AuthContext);
     /**text states */
     const [email, setEmail] = useState('');
+    const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
-    // const [email, setEmail] = useState('binlo@test.com');
-    // const [password, setPassword] = useState('binlo123');
-    const handleLogin = (email, password) => {
-        logIn(email, password)
+    const handleRegister = async (username, email, password) => {
+        let message = { username: username, email: email, password: password }
+        let requestOptions = await {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(message)
+        }
+        let change = await fetch(`https://app.acpa.training/api/auth/local/register`, requestOptions)
+            .then(response => response.json())
+            .then(data => {
+                console.log(data)
+                if (data.statusCode !== 400) {
+                    navigation.navigate('Login')
+                    Alert.alert("我們已經發送了到您的電郵地址，請查看您的電子郵件箱。")
+                }
+                else
+                    Alert.alert("用戶名稱或電郵已經被注冊")
+            })
+            .catch(err => {
+                console.log(err)
+                return fal
+            })
     }
 
     return (
@@ -25,9 +47,18 @@ export default function LoginScreen({ navigation }) {
             <StatusBar barStyle="dark-content" hidden={false} backgroundColor="#807038" translucent={true} />
             <Image style={{ top: -20, minWidth: "80%", minHeight: "10%" }} source={require('../../assets/icons/logo-strapi.png')} />
             <TextInput
+                onChangeText={(username) => setUsername(username)}
+                editable
+                placeholder={'請輸入用戶名稱'}
+                placeholderTextColor="gray"
+                maxLength={40}
+                style={styles.input}
+                value={username}
+            />
+            <TextInput
                 onChangeText={(email) => setEmail(email)}
                 editable
-                placeholder={'請輸入用戶電郵'}
+                placeholder={'請輸入電郵'}
                 placeholderTextColor="gray"
                 maxLength={40}
                 style={styles.input}
@@ -37,16 +68,15 @@ export default function LoginScreen({ navigation }) {
                 onChangeText={(password) => setPassword(password)}
                 editable
                 secureTextEntry={true}
-                placeholder={'請輸入密碼'}
+                placeholder={'請輸入至少8個字母密碼'}
                 placeholderTextColor="gray"
                 maxLength={20}
                 style={styles.input}
                 value={password}
             />
-            <TouchableHighlight underlayColor="#807038" style={[styles.buttonContainer, styles.loginButton]} onPress={() => handleLogin(email, password)}>
-                <Text style={{ color: "white", fontSize: 18, fontWeight: 'bold' }}>登入</Text>
-            </TouchableHighlight>
-            <TouchableHighlight underlayColor="#807038" style={[styles.buttonContainer, styles.loginButton]} onPress={() => navigation.navigate('Register')}>
+            <TouchableHighlight underlayColor="#807038" style={[styles.buttonContainer, styles.loginButton]} onPress={async () => {
+                let change = await handleRegister(username, email, password);
+            }}>
                 <Text style={{ color: "white", fontSize: 18, fontWeight: 'bold' }}>注冊</Text>
             </TouchableHighlight>
         </View>

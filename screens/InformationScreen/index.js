@@ -1,16 +1,32 @@
-import React, { useContext, useEffect, useState, useCallback } from 'react';
-import { StatusBar, ActivityIndicator, Share, ScrollView, StyleSheet, Text, View, Button, Image, TouchableOpacity } from 'react-native';
+import React, { useContext, useEffect, useState, useCallback, useRef } from 'react';
+import { Dimensions, StatusBar, ActivityIndicator, Share, ScrollView, StyleSheet, Text, View, Button, Image, TouchableOpacity, Platform } from 'react-native';
 import { AuthContext } from '../../contexts/authContext';
 import axios from 'axios';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import * as SecureStore from 'expo-secure-store';
 import { ShareContext } from '../../contexts/shareContext';
+import Constants from 'expo-constants';
+import * as Notifications from 'expo-notifications';
+
+Notifications.setNotificationHandler({
+    handleNotification: async () => ({
+        shouldShowAlert: true,
+        shouldPlaySound: false,
+        shouldSetBadge: false,
+    }),
+});
 
 export default function ProfileScreen({ navigation }) {
     const [api, ApiReply] = React.useState("");
     const [isLoading, setLoading] = useState(true);
     const [image, setImage] = useState(false);
     const { courseShare: [courseList, CourseReply], referreeShare: [referreeList, ReferreeReply] } = React.useContext(ShareContext);
+    const [expoPushToken, setExpoPushToken] = useState('');
+    const [notification, setNotification] = useState(false);
+    const notificationListener = useRef();
+    const responseListener = useRef();
+    let screenHeight = Dimensions.get('window').height;
+
     const onShare = async () => {
         try {
             const copyLink = api ? `https://app.acpa.training/signup/${api.referralToken}` : '';
@@ -36,6 +52,82 @@ export default function ProfileScreen({ navigation }) {
             <StatusBar translucent backgroundColor={backgroundColor} {...props} />
         </View>
     );
+
+    async function registerForPushNotificationsAsync() {
+        let token;
+        if (Constants.isDevice) {
+            const { status: existingStatus } = await Notifications.getPermissionsAsync();
+            let finalStatus = existingStatus;
+            if (existingStatus !== 'granted') {
+                const { status } = await Notifications.requestPermissionsAsync();
+                finalStatus = status;
+            }
+            if (finalStatus !== 'granted') {
+                alert('Failed to get push token for push notification!');
+                return;
+            }
+            console.log("first")
+            token = (await Notifications.getExpoPushTokenAsync()).data;
+            console.log(token);
+        } else {
+            alert('Must use physical device for Push Notifications');
+        }
+
+        if (Platform.OS === 'android') {
+            Notifications.setNotificationChannelAsync('default', {
+                name: 'default',
+                importance: Notifications.AndroidImportance.MAX,
+                vibrationPattern: [0, 250, 250, 250],
+                lightColor: '#FF231F7C',
+            });
+        }
+
+        return token;
+    }
+    // notification effect
+
+    useEffect(function effectFunction() {
+        async function fetchData() {
+            let expoToken = await registerForPushNotificationsAsync()
+            await setExpoPushToken(expoToken)
+            // TODO: fetch put the data
+            console.log(typeof (expoPushToken))
+            console.log(`pushToken: ${expoPushToken}`);
+            let message = { "pushToken": expoPushToken }
+            let token = await SecureStore.getItemAsync('token')
+            var myHeaders = new Headers();
+            // myHeaders.append("Authorization", "Bearer " + token);
+            var requestOptions = await {
+                method: 'PUT', // Method itself
+                headers: {
+                    'Connection': 'keep-alive',
+                    'Pragma': 'no-cache',
+                    'Authorization': "Bearer " + token,
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(message) // We send data in JSON format
+            }
+            await fetch('https://app.acpa.training/api/users-permissions/setPushToken', requestOptions)
+                .then(response => response.json())
+                .then(data => console.log(data)) // Manipulate the data retrieved back, if we want to do something with it
+                .catch(err => console.log(err));
+            // This listener is fired whenever a notification is received while the app is foregrounded
+            notificationListener.current = Notifications.addNotificationReceivedListener(notification => {
+                setNotification(notification);
+            });
+
+            // This listener is fired whenever a user taps on or interacts with a notification (works when app is foregrounded, backgrounded, or killed)
+            responseListener.current = Notifications.addNotificationResponseReceivedListener(response => {
+                console.log(response);
+            });
+
+            return () => {
+                Notifications.removeNotificationSubscription(notificationListener.current);
+                Notifications.removeNotificationSubscription(responseListener.current);
+            };
+        }
+        fetchData();
+    }, [expoPushToken]);
 
     React.useEffect(function effectFunction() {
         async function fetchData() {
@@ -63,6 +155,7 @@ export default function ProfileScreen({ navigation }) {
             const parserReferral = await (referralResponse.text())
             const jsonReferral = await (JSON.parse(parserReferral))
             const filterResult = await (jsonReferral.filter(item => item.referral_referrer.id == jsonAPI.id))
+            console.log(filterResult)
             await ReferreeReply(filterResult)
             await setLoading(false)
             console.log(token)
@@ -74,25 +167,14 @@ export default function ProfileScreen({ navigation }) {
         statusBar: {
             height: StatusBar.currentHeight
         },
-        container: {
-            width: '100%'
-        },
-        header: {
-            width: '100%',
-            marginTop: 20,
-            backgroundColor: 'white',
-            height: 70,
-        },
-        companyLogo: {
-            alignSelf: 'center',
-            justifyContent: 'center',
-            width: '35%',
-            height: '35%',
-            marginTop: 20
-        },
+        // container: {
+        //     width: '100vh',
+        //     minHeight: 600
+        // },
         body: {
             width: '100%',
-            backgroundColor: '#513654'
+            height: screenHeight,
+            backgroundColor: '#513654',
         },
         staticContainer: {
             height: 400,
@@ -215,11 +297,12 @@ export default function ProfileScreen({ navigation }) {
 
     return (
         <View>
-            {isLoading ? (<View style={{ top: 300, flex: 1, justifyContent: "center" }}>
-                <StatusBar barStyle="dark-content" hidden={false} backgroundColor="#807038" translucent={true} />
-                <ActivityIndicator size="large" color="#807038" />
-            </View>) : (
-                <ScrollView style={styles.container}>
+            {isLoading ? (
+                <View style={{ top: 300, flex: 1, justifyContent: "center" }}>
+                    <StatusBar barStyle="dark-content" hidden={false} backgroundColor="#807038" translucent={true} />
+                    <ActivityIndicator size="large" color="#807038" />
+                </View>) : (
+                <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
                     <StatusBar barStyle="dark-content" hidden={false} backgroundColor="#807038" translucent={true} />
                     <View style={styles.body}>
                         <View style={styles.staticContainer}>
