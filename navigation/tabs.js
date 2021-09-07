@@ -46,7 +46,7 @@ const Tabs = () => {
             <Tab.Screen name="Information"
                 component={InformationScreen}
                 options={{
-                    tabBarLabel: 'Information',
+                    tabBarLabel: '會員資訊',
                     tabBarIcon: ({ color }) => (
                         <MaterialCommunityIcons name="account" color={color} size={35} />
                     ),
@@ -67,11 +67,7 @@ const Tabs = () => {
 
                 })}
                 options={{
-                    tabBarLabel: 'Logout',
-                    // tabBarOptions: {
-                    //     activeTintColor: '#000',
-                    //     inactiveTintColor: '#fff',
-                    // },
+                    tabBarLabel: '登出',
                     tabBarIcon: ({ color }) => (
                         < MaterialCommunityIcons name="logout" color={color} size={35} />
                     ),
