@@ -9,7 +9,6 @@ import LoginScreen from './screens/LoginScreen';
 import ReferreeScreen from './screens/ReferreeScreen';
 import ProfileScreen from './screens/InformationScreen';
 import CourseInfoScreen from './screens/CourseInfoScreen';
-import ScannerScreen from './screens/ScannerScreen';
 
 /**navigation tab */
 import Tabs from './navigation/tabs';
