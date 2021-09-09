@@ -1,8 +1,7 @@
-import React, { useEffect, useState } from 'react';
-import { StatusBar, TouchableHighlight, Image, StyleSheet, TextInput, Text, View, Button, SafeAreaView } from 'react-native';
-import { color } from 'react-native-reanimated';
+import React, { useState } from 'react';
+import { StatusBar, TouchableHighlight, Image, StyleSheet, TextInput, Text, KeyboardAvoidingView } from 'react-native';
 import { AuthContext } from '../../contexts/authContext';
-import * as Notifications from 'expo-notifications';
+
 
 /** 
  * {SafeAreaView} only available for ios devices
@@ -14,14 +13,12 @@ export default function LoginScreen({ navigation }) {
     /**text states */
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    // const [email, setEmail] = useState('binlo@test.com');
-    // const [password, setPassword] = useState('binlo123');
     const handleLogin = (email, password) => {
         logIn(email, password)
     }
 
     return (
-        <View style={styles.container}>
+        <KeyboardAvoidingView behavior={Platform.OS === "ios" ? "padding" : "height"} style={styles.container}>
             <StatusBar barStyle="dark-content" hidden={false} backgroundColor="#807038" translucent={true} />
             <Image style={{ top: -20, minWidth: "80%", minHeight: "10%" }} source={require('../../assets/icons/logo-strapi.png')} />
             <TextInput
@@ -46,10 +43,10 @@ export default function LoginScreen({ navigation }) {
             <TouchableHighlight underlayColor="#807038" style={[styles.buttonContainer, styles.loginButton]} onPress={() => handleLogin(email, password)}>
                 <Text style={{ color: "white", fontSize: 18, fontWeight: 'bold' }}>登入</Text>
             </TouchableHighlight>
-            <TouchableHighlight underlayColor="#807038" style={[styles.buttonContainer, styles.loginButton]} onPress={() => navigation.navigate('Register')}>
-                <Text style={{ color: "white", fontSize: 18, fontWeight: 'bold' }}>注冊</Text>
+            <TouchableHighlight underlayColor="#807038" onPress={() => navigation.navigate('Register')}>
+                <Text style={{ color: "white", fontSize: 12, fontWeight: 'bold' }}>尚未註冊? 按此</Text>
             </TouchableHighlight>
-        </View>
+        </KeyboardAvoidingView>
     )
 }
 

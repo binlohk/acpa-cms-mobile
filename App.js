@@ -1,5 +1,5 @@
-import React, { useContext, useMemo, useReducer, useEffect } from 'react';
-import { View, Text, Button, Image } from 'react-native';
+import React, { useMemo, useReducer, useEffect } from 'react';
+import { Image } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
@@ -25,6 +25,7 @@ import ShareProvider from './contexts/shareContext'
 
 /**API */
 import axios from 'axios';
+import RegisterScreen from './screens/RegisterScreen';
 
 /**if loading add spinner */
 
@@ -79,8 +80,6 @@ function App() {
           identifier: email,
           password: password
         })
-        // console.log(response.data.jwt, 'respo')
-        // console.log(response.data.user, 'user')
         /**handling user info */
         await SecureStore.setItemAsync('name', response.data.user.username);
         await SecureStore.setItemAsync('email', response.data.user.email);
@@ -133,6 +132,7 @@ function App() {
                 loginState.token === null ? (
                   <>
                     <Stack.Screen name="Login" component={LoginScreen} options={{ headerShown: false }} />
+                    <Stack.Screen name="Register" component={RegisterScreen} options={{ headerShown: false }} />
                   </>
                 ) : (
                   <>

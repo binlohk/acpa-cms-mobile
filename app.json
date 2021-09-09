@@ -1,15 +1,20 @@
 {
+  "name": "acpa-cms-mobile",
+  "displayName": "嘉林財俊",
+  "expo": {
     "name": "acpa-cms-mobile",
-    "displayName": "acpa-cms-mobile",
-    "expo": {
-        "name": "acpa-cms-mobile",
-        "slug": "acpa-cms-mobile",
-        "version": "1.5.4",
-        "assetBundlePatterns": [
-            "**/*"
-        ],
-        "ios": {
-            "bundleIdentifier": "training.acpa.mobile"
-        }
+    "icon": "assets/icon.png",
+    "slug": "acpa-cms-mobile",
+    "version": "1.5.4",
+    "assetBundlePatterns": [
+      "**/*"
+    ],
+    "ios": {
+      "buildNumber": "2",
+      "bundleIdentifier": "training.acpa.mobile"
+    },
+    "android": {
+      "package": "training.acpa.mobile"
     }
+  }
 }
