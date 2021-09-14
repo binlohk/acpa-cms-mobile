@@ -1,5 +1,5 @@
 import React, { useMemo, useReducer, useEffect } from 'react';
-import { Image } from 'react-native';
+import { Alert, Image } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
@@ -87,9 +87,8 @@ function App() {
         // new storage
         dispatch({ type: 'LOGIN', name: response.data.user.username, email: response.data.user.email, token: response.data.jwt });
       } catch (e) {
-        console.log(e);
+        Alert.alert("錯誤", "登入失敗", [{text: "確定"}])
       }
-      // console.log('user token: ', token);
     },
     logOut: async () => {
       try {

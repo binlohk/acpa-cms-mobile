@@ -51,10 +51,13 @@ export default function LoginScreen({ navigation }) {
 }
 
 const styles = StyleSheet.create({
+    contentContainer: {
+        paddingVertical: 20,
+    },
     container: {
         flex: 1,
         alignItems: 'center',
-        marginTop: 20,
+        paddingTop: 20,
         backgroundColor: 'rgba(81,54,84,1)',
         justifyContent: 'center',
     },
